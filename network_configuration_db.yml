@@ -16,7 +16,7 @@
     - name: DB | Allow authentication from App Server IP in pg_hba.conf
       lineinfile:
         path: /etc/postgresql/13/main/pg_hba.conf
-        line: "host all all {{ app_server_ip }}/32 md5"
+        line: "host all all 10.1.1.0/24 md5"
       notify: Restart Postgres
 
     # --- KONFIGURACJA FIREWALLA (UFW) ---
@@ -37,7 +37,7 @@
         rule: allow
         port: '5432'
         proto: tcp
-        from_ip: "{{ app_server_ip }}"
+        from_ip: "10.1.1.0/24"
 
     - name: UFW | Enable firewall and set default deny policy
       community.general.ufw:
