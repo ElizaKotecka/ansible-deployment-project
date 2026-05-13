@@ -1,7 +1,6 @@
 server {
     listen 80;
     
-    # Ansible automatycznie podstawi tu adres IP lub nazwę z pliku hosts.ini!
     server_name {{ ansible_host }}; 
 
     location / {
