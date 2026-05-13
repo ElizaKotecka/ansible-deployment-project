@@ -1,0 +1,36 @@
+# Student ID: 239813, Eliza Kotecka
+- name: Configure the applicatio and developer environment
+  hosts: app_servers
+  become: yes
+  
+  tasks:
+    - name: Install required runtime environments
+      apt:
+        name:
+          - apt-transport-https
+          - nodejs
+          - redis-server
+          - rabbitmq-server
+          - ufw
+        state: present
+        update_cache: yes
+
+    - name: Step 1 - Download the Microsoft repository configuration (for Debian 11)
+      get_url:
+        url: https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb
+        dest: /tmp/packages-microsoft-prod.deb
+
+    - name: Step 2 - Install Microsoft repo
+      apt:
+        deb: /tmp/packages-microsoft-prod.deb
+
+    - name: Step 3 - Download .NET
+      get_url:
+        url: https://dot.net/v1/dotnet-install.sh
+        dest: /tmp/dotnet-install.sh
+        mode: '0755'
+
+    - name: Step 4 - Run script and instalation .NET 10
+      command: /tmp/dotnet-install.sh --channel 10.0 --install-dir /usr/share/dotnet
+      args:
+        creates: /usr/share/dotnet/dotnet

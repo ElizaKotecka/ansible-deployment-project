@@ -1,0 +1,23 @@
+- name: Instalacja serwera bazy danych PostgreSQL
+  hosts: db_servers
+  become: yes
+
+  tasks:
+    - name: Krok 1 - Instalacja pakietu ACL
+      apt:
+        name: acl
+        state: present
+        update_cache: yes
+
+    - name: Krok 2 - Instalacja PostgreSQL
+      apt:
+        name: 
+          - postgresql
+          - postgresql-contrib
+        state: present
+
+    - name: Krok 3 - Upewnienie się, że usługa Postgres działa
+      service:
+        name: postgresql
+        state: started
+        enabled: yes

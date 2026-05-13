@@ -1,0 +1,14 @@
+# Python (Ansible)
+*.pyc
+*.retry
+
+# Systemowe
+.DS_Store
+Thumbs.db
+
+# Tymczasowe pliki edytora
+*.save
+*.swp
+
+# Archiwa
+*.zip
